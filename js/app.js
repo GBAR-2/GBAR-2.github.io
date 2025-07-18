@@ -1,10 +1,10 @@
 const CACHE_NAME = 'aventura-marina-tailwind-v2'; // Cambia el nombre al actualizar
-const BASE_URL = '/APW.github.io';
+const BASE_URL = '/GBAR.github.io';
 const URLS_TO_CACHE = [
   `${BASE_URL}/`,
   `${BASE_URL}/index.html`,
-  `${BASE_URL}/index1.html`,
-  `${BASE_URL}/index12.html`,
+  `${BASE_URL}/registro.html`,
+  `${BASE_URL}/iniciosesion.html`,
   `${BASE_URL}/manifest.json`,
   `${BASE_URL}/js/app.js`,
   `${BASE_URL}/images/Captura de pantalla 2025-06-26 211713.png`,
@@ -49,7 +49,7 @@ self.addEventListener('fetch', (event) => {
       .catch(() => {
         // Fallback solo para páginas HTML
         if (event.request.mode === 'navigate') {
-          return caches.match(`${BASE_URL}/index.html`);
+          return caches.match(`${BASE_URL}/iniciosesion.html`);
         }
         return new Response('Recurso no disponible offline', { status: 503 });
       })
