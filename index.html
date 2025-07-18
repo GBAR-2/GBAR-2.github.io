@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar sesión - Aventura Marina</title>
     <!-- Metadatos PWA -->
-    <link rel="manifest" href="/APW.github.io/manifest.json">
+    <link rel="manifest" href="/GBAR.github.io/manifest.json">
     <meta name="theme-color" content="#2ba9d9">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -191,7 +191,7 @@
             </form>
 
             <div class="footer">
-                <p>¿No tienes cuenta? <a href="index1.html" class="text-blue-600 underline">Regístrate aquí</a></p>
+                <p>¿No tienes cuenta? <a href="registro.html" class="text-blue-600 underline">Regístrate aquí</a></p>
             </div>
         </div>
     </div>
@@ -274,8 +274,8 @@
         // Registro del Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/APW.github.io/app.js', {
-                    scope: '/APW.github.io/'
+                navigator.serviceWorker.register('/GBAR.github.io/js/serviceWorker.js', {
+    scope: '/GBAR.github.io/'
                 }).then(registration => {
                     console.log('ServiceWorker registrado con éxito:', registration.scope);
                 }).catch(error => {
