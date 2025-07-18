@@ -265,8 +265,8 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/APW.github.io/app.js', {
-        scope: '/APW.github.io/'
+      navigator.serviceWorker.register('/GBAR.github.io/js/app.js', {
+        scope: '/GBAR.github.io/'
       })
       .then(reg => console.log('✅ SW registrado! Scope:', reg.scope))
       .catch(err => console.error('❌ Error:', err));
