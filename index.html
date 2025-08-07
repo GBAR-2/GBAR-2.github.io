@@ -1,277 +1,314 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GBAR</title>
-    <!-- CSS -->
-    <link rel="manifest" href="manifest.json"/> 
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Menu -->
-    <div class="menu">
-      <nav>
-        <input type="checkbox" id="check" />
-        <label for="check" class="checkbtn">
-          <ion-icon name="grid-outline"></ion-icon>
-        </label>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión - Aventura Marina</title>
+    <!-- Metadatos PWA -->
+    <link rel="manifest" href="/GBAR.github.io/manifest.json">
+     <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
+    <meta name="theme-color" content="#2ba9d9">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2ba9d9 0%, #1a7a9d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .marine-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30,50 Q50,30 70,50 T90,50" fill="none" stroke="%232ba9d9" stroke-width="2"/><circle cx="20" cy="30" r="3" fill="%232ba9d9"/><circle cx="80" cy="20" r="2" fill="%232ba9d9"/><circle cx="40" cy="70" r="4" fill="%232ba9d9"/></svg>');
+            background-size: 200px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        .header {
+            background: #2ba9d9;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        .header h1 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+        .header p {
+            margin: 5px 0 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        .wave {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23ffffff"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23ffffff"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"></path></svg>');
+            background-size: 1200px 20px;
+        }
+        .form-container {
+            padding: 30px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .input-group input:focus {
+            border-color: #2ba9d9;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(43, 169, 217, 0.2);
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #2ba9d9;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background: #1a7a9d;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .fish {
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            background: #2ba9d9;
+            border-radius: 50%;
+            animation: swim 15s linear infinite;
+            opacity: 0.6;
+        }
+        .fish:before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            right: -5px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 10px solid #2ba9d9;
+        }
+        @keyframes swim {
+            0% { transform: translateX(-50px) rotateY(0deg); }
+            50% { transform: translateX(calc(100vw + 50px)) rotateY(0deg); }
+            51% { transform: translateX(calc(100vw + 50px)) rotateY(180deg); }
+            100% { transform: translateX(-50px) rotateY(180deg); }
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #777;
+        }
+        @media (max-width: 480px) {
+            .card {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="marine-bg"></div>
+    <div class="fish" style="top: 25%; animation-delay: 0s;"></div>
+    <div class="fish" style="top: 45%; animation-delay: 2s; width: 30px; height: 15px;"></div>
+    <div class="fish" style="top: 75%; animation-delay: 5s; width: 25px; height: 12px;"></div>
+    <div class="fish" style="top: 35%; animation-delay: 7s; width: 35px; height: 18px;"></div>
 
-        <label class="logo">GBAR</label>
-
-        <ul>
-          <li><a href="#hero-section" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#testimonial">Reviews</a></li>
-          <li><a href="#app">Download App</a></li>
-        </ul>
-      </nav>
-    </div>
-    <!-- End Menu -->
-
-    <!-- Hero Section -->
-    <div class="section flex" id="hero-section">
-      <div class="text">
-        <h1 class="primary">
-          Concientización sobre <br />
-        <span>la Vida Marina</span>
-        </h1>
-
-        <p class="tertiary justificado">
-          En el mundo actual, en el caso de la gente que vive alejado de las costas, no solemos ver el deterioro de la vida marina en nuestro planeta. Lo que propone "Echo Umi" es 
-          una experiencia interactiva e informativa mediante un videojuego accesible desde cualquier dispositivo, que concientiza sobre la contaminación marina y promueve 
-          la limpieza de los ecosistemas submarinos a través de misiones, datos reales (mediante nuestra página web) y participación activa del jugador.
-
-        </p>
-
-      </div>
-      <div class="visual">
-        <img src="images/Captura de pantalla 2025-06-26 211713.png" alt="" />
-      </div>
-    </div>
-    <!-- End Hero Section -->
-
-    <!-- About -->
-    <div class="section" id="about">
-      <div class="container flex">
-        <div class="visual">
-          <img src="images/ChatGPT Image 19 jun 2025, 08_57_38 p.m..png" alt="" />
+    <div class="card">
+        <div class="header">
+            <h1>🌊 Aventura Marina</h1>
+            <p>¡Bienvenido de nuevo al océano!</p>
+            <div class="wave"></div>
         </div>
-        <div class="text">
-          <div class="secondary">🌊 Acerca de nuestra misión</div>
-          <h2 class="primary">150+</h2>
 
-          <h3 class="tertiary justificado">Horas puestas en el proyecto</h3>
+        <div class="form-container">
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="name">Nombre de jugador</label>
+                    <input type="text" id="name" placeholder="Ej: Explorador Marino" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn">Navegar 🚤</button>
+            </form>
 
-          <p>
-            Este proyecto es el resultado de más de 150 horas de trabajo 
-            colaborativo, creatividad y pasión. Nuestra misión es crear 
-            conciencia sobre la vida submarina, su belleza, su fragilidad, 
-            y cómo se está deteriorando debido a la contaminación, el cambio 
-            climático y la sobreexplotación. A través de una experiencia interactiva, 
-            buscamos que jugadores de todas las edades entiendan que el mar no es un recurso infinito, 
-            sino un ecosistema que necesita nuestra atención urgente.
-          </p>
-
-
-        </div>
-      </div>
-    </div>
-    <!-- End About -->
-
-
-    <!-- Testimonial -->
-    <div class="section" id="testimonial">
-      <div class="container flex">
-        <div class="text">
-          <h2 class="secondary">🐚 Trasfondo de la Historia del Videojuego</h2>
-          <p>
-            En un mundo donde los océanos solían estar llenos de vida, 
-            el Mar de Umi se ha convertido en un vertedero silencioso. 
-            Lo que alguna vez fue un paraíso submarino, hoy es un ecosistema al borde del colapso. 
-            Tú, como jugador, te conviertes en el último Guardián del Océano, una entidad consciente creada por el mar para restaurar el equilibrio. 
-            Explorarás restos de coral, liberarás animales atrapados y enfrentarás amenazas causadas por la contaminación humana. Tu misión es limpiar, 
-            restaurar y educar… porque el futuro del mar está en tus manos.
-          </p>
-
-          <div class="user flex">
-            <img src="images/ChatGPT Image 19 jun 2025, 08_57_38 p.m..png" alt="" />
-
-            <div class="name">
-              <div class="title">Echo - Umi</div>
-              <div class="location">Santa Catarina, Nuevo León</div>
+            <div class="footer">
+                <p>¿No tienes cuenta? <a href="registro.html" class="text-blue-600 underline">Regístrate aquí</a></p>
             </div>
-          </div>
         </div>
-        <div class="visual">
-          <img src="images/ChatGPT Image 19 jun 2025, 08_57_38 p.m..png" alt="" />
-        </div>
-      </div>
     </div>
-    <!-- End Testimonial -->
 
-    <!-- FAQ -->
-    <div class="section" id="faq">
-      <h2 class="secondary">FAQ</h2>
+    <!-- Botón de instalación PWA -->
+    <button id="installBtn" class="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hidden z-50">
+        📲 Instalar App
+    </button>
 
-      <div class="faq">
-        <details>
-          <summary>¿Quienes somos? 👥</summary>
-          <div class="content">
-            <p class="justificado">
-              Somos cuatro estudiantes de Desarrollo de Software apasionados por la tecnología, 
-              los videojuegos y el medio ambiente. Este proyecto representa nuestro trabajo final de carrera, 
-              donde elegimos integrar uno de los 17 Objetivos de Desarrollo Sostenible propuestos por la ONU: 
-              el punto 14 – Vida Submarina. Lo que comenzó como una idea técnica, se transformó en una causa. 
-              Hoy queremos que nuestra plataforma no solo entretenga, 
-              sino que también eduque y despierte conciencia.
-            </p>
-          </div>
-        </details>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
 
-        <details>
-          <summary>¿Por qué lo hicimos? ❓</summary>
-          <div class="content">
-            <p class="justificado">
-              Porque sabemos que muchas personas, especialmente quienes viven lejos de las costas 
-              o nunca han visto el mar, no dimensionan lo importante que es. El océano regula el clima, 
-              produce oxígeno, es hogar de millones de especies… y está muriendo en silencio. Hicimos 
-              este juego para conectar emocionalmente a las personas con la vida marina, sin importar dónde vivan. 
-              Creemos que si puedes explorar el fondo marino desde tu pantalla, tal vez te importe más protegerlo desde la realidad.
+        const firebaseConfig = {
+            apiKey: "AIzaSyBHB_6aIb_MWTojKx0asdkdRSfhGO4Blys",
+            authDomain: "gbar-61a43.firebaseapp.com",
+            databaseURL: "https://gbar-61a43-default-rtdb.firebaseio.com",
+            projectId: "gbar-61a43",
+            storageBucket: "gbar-61a43.appspot.com",
+            messagingSenderId: "929964316297",
+            appId: "1:929964316297:web:53ef1aa347df095d86d858"
+        };
 
-            </p>
-          </div>
-        </details>
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-        <details>
-          <summary>¿Cuál es nuestra misión? 🐳</summary>
-          <div class="content">
-            <p class="justificado">
-              Nuestra misión es clara: generar un cambio de conciencia a través de la tecnología 
-              y el entretenimiento. Queremos que nuestros jugadores aprendan, se conmuevan y actúen. 
-              No basta con saber que el océano está en peligro; queremos que quienes jueguen se 
-              pregunten qué pueden hacer para salvarlo. Nuestro videojuego es solo una chispa, 
-              pero puede encender una conciencia que dure toda la vida.
-            </p>
-          </div>
-        </details>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
 
-        <details>
-          <summary>¿Cómo nos mantenemos a flote? 🐬</summary>
-          <div class="content">
-            <p class="justificado">
-             Nos mantenemos a flote gracias a nuestra pasión por crear, aprender y proteger 
-              el planeta. Este proyecto fue completamente desarrollado por nosotros, 
-              usando herramientas libres y código abierto. No recibimos financiamiento externo, 
-              pero nos mueve algo más fuerte: la convicción de que la tecnología puede ser usada para el bien. 
-              Cada línea de código, cada sprite, cada idea surgió de una motivación genuina por marcar la 
-              diferencia.
-            </p>
-          </div>
-        </details>
-      </div>
-    </div>
-    <!-- End FAQ -->
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-    <!-- App -->
-    <div class="section" id="app">
-      <div class="container flex">
-        <div class="visual">
-          <img src="images/ChatGPT Image 19 jun 2025, 08_57_38 p.m..png" alt="" />
-        </div>
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
 
-        <div class="text">
-          <h2 class="secondary">Descarga el AppShell</h2>
-          <p>
-            !Para disfrutar de todo el contenido de GBAR Develop, puedes hacerlo mediante los siguientes enlaces¡
-          </p>
+                const userRef = ref(database);
+                try {
+                    const snapshot = await get(child(userRef, `Users/${name}`));
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        if (userData.email === email && userData.password === password) {
+                            showSuccessMessage();
+                        } else {
+                            showErrorMessage("Correo o contraseña incorrectos.");
+                        }
+                    } else {
+                        showErrorMessage("Usuario no encontrado.");
+                    }
+                } catch (error) {
+                    showErrorMessage("Error al verificar: " + error.message);
+                }
+            });
+        });
 
-          <div class="download flex">
-            <div class="app-store">
-              <ion-icon name="logo-google-playstore"></ion-icon>
-              <p>
-                Obten la aplicación movil en <br />
-                <span>Google Play</span>
-              </p>
-            </div>
+        function showSuccessMessage() {
+            const bubble = document.createElement('div');
+            bubble.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg animate-bounce';
+            bubble.textContent = '¡Inicio exitoso! 🐙';
+            document.body.appendChild(bubble);
 
-            <div class="app-store">
-              <ion-icon name="logo-apple"></ion-icon>
-              <p>
-                O también en<br />
-                <span>App Store</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End App -->
+            setTimeout(() => {
+                bubble.remove();
+                window.location.href = "iniciosesion.html"; 
+            }, 2000);
+        }
 
-    <!-- Footer -->
-    <div class="footer">
-      <div class="container flex">
-        <div class="footer-about">
-          <h2>Acerca de GBAR - Develop</h2>
-          <p>
-            Este proyecto ha sido desarrollado por cuatro estudiantes de Desarrollo de Software como proyecto integrador de la carrera, 
-            inspirado en el Objetivo 14 de Desarrollo Sostenible: Vida Submarina. Nuestra misión es generar 
-            conciencia sobre la contaminación de los océanos a través de una experiencia interactiva, informativa y 
-            accesible desde cualquier dispositivo.
-          </p>
-        </div>
+        function showErrorMessage(msg) {
+            const bubble = document.createElement('div');
+            bubble.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-full shadow-lg animate-bounce';
+            bubble.textContent = `Error: ${msg} 😢`;
+            document.body.appendChild(bubble);
+            setTimeout(() => {
+                bubble.remove();
+            }, 3000);
+        }
+    </script>
 
-        <div class="quick-links">
-          <h2>Quick Links</h2>
+    <script>
+        // Registro del Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/GBAR.github.io/js/serviceWorker.js', {
+    scope: '/GBAR.github.io/'
+                }).then(registration => {
+                    console.log('ServiceWorker registrado con éxito:', registration.scope);
+                }).catch(error => {
+                    console.error('Error al registrar ServiceWorker:', error);
+                });
+            });
+        }
 
-          <ul>
-            <li>About Us</li>
-            <li>Contact Us</li>
-            <li>Order</li>
-            <li>Services</li>
-          </ul>
-        </div>
+        // Lógica de instalación PWA
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
 
-        <div class="get-in-touch">
-          <h2>Get in touch</h2>
-          <ul>
-            <li>Account</li>
-            <li>Support Center</li>
-            <li>Feedback</li>
-            <li>Suggession</li>
-          </ul>
-        </div>
-      </div>
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.classList.remove('hidden');
+        });
 
-      <div class="copyright">
-        <p>Copyright &copy; 2025. All Rights Reserved.</p>
-      </div>
-    </div>
-    
-           <!--   BTN   -->
-    <!-- End Footer -->
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBtn.classList.add('hidden');
+                }
+                deferredPrompt = null;
+            }
+        });
 
-    <!-- Ion Icons Js -->
-    <script
-      type="module"
-      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"
-    ></script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/GBAR.github.io/js/app.js', {
-        scope: '/GBAR.github.io/'
-      })
-      .then(reg => console.log('✅ SW registrado! Scope:', reg.scope))
-      .catch(err => console.error('❌ Error:', err));
-    });
-  }
-</script>
-  </body>
+        window.addEventListener('appinstalled', () => {
+            installBtn.classList.add('hidden');
+        });
+    </script>
+</body>
 </html>

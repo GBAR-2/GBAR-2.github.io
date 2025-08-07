@@ -1,4 +1,4 @@
-const odsquiz = 'odsquiz-cache-v1';
+const CACHE_NAME = 'gbar-pwa-v1';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -9,13 +9,6 @@ const urlsToCache = [
   'images/Captura de pantalla 2025-06-26 211713.png',
 ];
 
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(odsquiz).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
 
 self.addEventListener('activate', event => {
   event.waitUntil(
@@ -31,11 +24,14 @@ self.addEventListener('activate', event => {
   );
 });
 
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
+});
+
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    }).catch(() => {
-    })
-  );
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
 });

@@ -1,313 +1,535 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesión - Aventura Marina</title>
-    <!-- Metadatos PWA -->
-    <link rel="manifest" href="/GBAR.github.io/manifest.json">
-    <meta name="theme-color" content="#2ba9d9">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #2ba9d9 0%, #1a7a9d 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .marine-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30,50 Q50,30 70,50 T90,50" fill="none" stroke="%232ba9d9" stroke-width="2"/><circle cx="20" cy="30" r="3" fill="%232ba9d9"/><circle cx="80" cy="20" r="2" fill="%232ba9d9"/><circle cx="40" cy="70" r="4" fill="%232ba9d9"/></svg>');
-            background-size: 200px;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 100%;
-            max-width: 400px;
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-        .header {
-            background: #2ba9d9;
-            color: white;
-            padding: 25px;
-            text-align: center;
-            position: relative;
-        }
-        .header h1 {
-            margin: 0;
-            font-weight: 600;
-            font-size: 1.8rem;
-        }
-        .header p {
-            margin: 5px 0 0;
-            opacity: 0.9;
-            font-size: 0.9rem;
-        }
-        .wave {
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 20px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23ffffff"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23ffffff"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ffffff"></path></svg>');
-            background-size: 1200px 20px;
-        }
-        .form-container {
-            padding: 30px;
-        }
-        .input-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-        }
-        .input-group input:focus {
-            border-color: #2ba9d9;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(43, 169, 217, 0.2);
-        }
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background: #2ba9d9;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        .btn:hover {
-            background: #1a7a9d;
-            transform: translateY(-2px);
-        }
-        .btn:active {
-            transform: translateY(0);
-        }
-        .fish {
-            position: absolute;
-            width: 40px;
-            height: 20px;
-            background: #2ba9d9;
-            border-radius: 50%;
-            animation: swim 15s linear infinite;
-            opacity: 0.6;
-        }
-        .fish:before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            right: -5px;
-            width: 0;
-            height: 0;
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-            border-left: 10px solid #2ba9d9;
-        }
-        @keyframes swim {
-            0% { transform: translateX(-50px) rotateY(0deg); }
-            50% { transform: translateX(calc(100vw + 50px)) rotateY(0deg); }
-            51% { transform: translateX(calc(100vw + 50px)) rotateY(180deg); }
-            100% { transform: translateX(-50px) rotateY(180deg); }
-        }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.8rem;
-            color: #777;
-        }
-        @media (max-width: 480px) {
-            .card {
-                border-radius: 0;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2ba9d9" />
+  <link rel="manifest" href="/GBAR.github.io/manifest.json" />
+  <link rel="stylesheet" href="/GBAR.github.io/style.css" />
+  <link rel="icon" href="/icons/icon-192.png" type="image/png" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
+  <title>GBAR</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <style>
+    #status-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      background: #e0f7fa;
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      border-radius: 8px;
+      z-index: 1000;
+    }
+    #status-container button {
+      cursor: pointer;
+      padding: 6px 12px;
+      border: none;
+      background-color: #0288d1;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    #status-container button:hover, #status-container button:focus {
+      background-color: #026aa7;
+      outline: none;
+    }
+    #connection-status {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      color: #027a18;
+    }
+    #connection-status.offline {
+      color: #d32f2f;
+    }
+    #connection-status .dot {
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      background-color: currentColor;
+      display: inline-block;
+      margin-right: 6px;
+      box-shadow: 0 0 6px currentColor;
+    }
+
+    .comments-container {
+      margin-top: 1rem;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .comment {
+      background: #f0f9ff;
+      border-radius: 8px;
+      padding: 10px 15px;
+      display: flex;
+      gap: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .avatar {
+      background-color: #0288d1;
+      color: white;
+      font-weight: bold;
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px #0288d1;
+    }
+    .comment-content {
+      flex: 1;
+    }
+    .comment-content strong {
+      font-size: 1.1rem;
+    }
+    .comment-content p {
+      margin: 0.3rem 0 0.6rem 0;
+      white-space: pre-wrap;
+    }
+    .comment-content .date {
+      font-size: 0.75rem;
+      color: #555;
+    }
+    .delete-comment-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: transparent;
+      border: none;
+      color: #d32f2f;
+      font-size: 1.2rem;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    .delete-comment-btn:hover,
+    .delete-comment-btn:focus {
+      color: #9b0000;
+      outline: none;
+    }
+
+    form#commentForm {
+      margin-top: 1rem;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    form#commentForm input,
+    form#commentForm textarea {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #0288d1;
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    form#commentForm input:focus,
+    form#commentForm textarea:focus {
+      outline: none;
+      border-color: #015a8f;
+      box-shadow: 0 0 6px #0288d1;
+    }
+    form#commentForm button {
+      background-color: #0288d1;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      align-self: flex-start;
+    }
+    form#commentForm button:hover,
+    form#commentForm button:focus {
+      background-color: #015a8f;
+      outline: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="marine-bg"></div>
-    <div class="fish" style="top: 25%; animation-delay: 0s;"></div>
-    <div class="fish" style="top: 45%; animation-delay: 2s; width: 30px; height: 15px;"></div>
-    <div class="fish" style="top: 75%; animation-delay: 5s; width: 25px; height: 12px;"></div>
-    <div class="fish" style="top: 35%; animation-delay: 7s; width: 35px; height: 18px;"></div>
+  <header>
+    <nav class="top-nav" role="navigation" aria-label="Menú principal">
+      <div class="logo" aria-label="Logo GBAR">🌊 GBAR</div>
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" class="menu-icon" aria-label="Mostrar menú">☰</label>
+      <ul class="menu" role="menubar">
+        <li role="none"><a href="#home" role="menuitem" data-key="nav-home">Inicio</a></li>
+        <li role="none"><a href="#about" role="menuitem" data-key="nav-about">Acerca</a></li>
+        <li role="none"><a href="#comments-section" role="menuitem" data-key="nav-comments">Comentarios</a></li>
+        <li role="none"><a href="#app" role="menuitem" data-key="nav-app">App</a></li>
+        <li role="none"><a href="#faq" role="menuitem" data-key="nav-faq">Preguntas</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="card">
-        <div class="header">
-            <h1>🌊 Aventura Marina</h1>
-            <p>¡Bienvenido de nuevo al océano!</p>
-            <div class="wave"></div>
-        </div>
-
-        <div class="form-container">
-            <form id="loginForm">
-                <div class="input-group">
-                    <label for="name">Nombre de jugador</label>
-                    <input type="text" id="name" placeholder="Ej: Explorador Marino" required>
-                </div>
-                <div class="input-group">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" placeholder="tucorreo@ejemplo.com" required>
-                </div>
-                <div class="input-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="btn">Navegar 🚤</button>
-            </form>
-
-            <div class="footer">
-                <p>¿No tienes cuenta? <a href="registro.html" class="text-blue-600 underline">Regístrate aquí</a></p>
-            </div>
-        </div>
+  <div id="status-container" role="region" aria-label="Estado de conexión y controles">
+    <div id="connection-status" aria-live="polite" aria-atomic="true" class="online" tabindex="0">
+      <span class="dot"></span>
+      <span data-key="status-online-text">Conectado</span>
     </div>
+    <button id="dark-mode-toggle" aria-pressed="false" aria-label="Activar modo oscuro">Modo Oscuro</button>
+    <button id="lang-toggle" aria-pressed="false" aria-label="Cambiar idioma">ES/EN</button>
+  </div>
 
-    <!-- Botón de instalación PWA -->
-    <button id="installBtn" class="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hidden z-50">
-        📲 Instalar App
-    </button>
+  <main>
+    <section id="home" tabindex="-1">
+      <h1 data-key="home-welcome">Bienvenido a GBAR</h1>
+      <p data-key="home-subtitle">Explora y protege los ecosistemas submarinos con nosotros.</p>
+    </section>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-database.js";
+    <section id="about" tabindex="-1">
+      <h2 data-key="about-title">🌊 Acerca de nuestra misión</h2>
+      <p data-key="about-hours">150+ horas puestas en el proyecto.</p>
+      <p data-key="about-text-1">
+        Este proyecto es el resultado de trabajo colaborativo, creatividad y pasión.
+        Buscamos crear conciencia sobre la vida marina y cómo protegerla.
+      </p>
+    </section>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBHB_6aIb_MWTojKx0asdkdRSfhGO4Blys",
-            authDomain: "gbar-61a43.firebaseapp.com",
-            databaseURL: "https://gbar-61a43-default-rtdb.firebaseio.com",
-            projectId: "gbar-61a43",
-            storageBucket: "gbar-61a43.appspot.com",
-            messagingSenderId: "929964316297",
-            appId: "1:929964316297:web:53ef1aa347df095d86d858"
-        };
+    <section id="comments-section" tabindex="-1">
+      <h2 data-key="comments-title">💬 Comentarios</h2>
+      <div id="commentsList" class="comments-container" aria-live="polite" aria-relevant="additions"></div>
+      <form id="commentForm" aria-label="Formulario para agregar comentario">
+        <input
+          type="text"
+          id="username"
+          placeholder="Tu nombre"
+          required
+          aria-required="true"
+          aria-describedby="usernameHelp"
+          autocomplete="name"
+        />
+        <small id="usernameHelp" class="sr-only">Ingresa tu nombre para comentar.</small>
+        <textarea
+          id="comment"
+          placeholder="Escribe tu comentario..."
+          rows="3"
+          required
+          aria-required="true"
+          aria-describedby="commentHelp"
+        ></textarea>
+        <small id="commentHelp" class="sr-only">Escribe tu opinión o pregunta.</small>
+        <button type="submit" data-key="comments-submit">Enviar Comentario</button>
+        <div id="form-feedback" role="alert" aria-live="assertive" style="color: #027a18; font-weight: 700; margin-top: 0.5rem;"></div>
+      </form>
+    </section>
 
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+    <section id="app" tabindex="-1">
+      <h2 data-key="app-title">📱 Descarga la App</h2>
+      <p data-key="app-text">Instala GBAR para una experiencia completa en tu dispositivo móvil.</p>
+      <button onclick="installApp()" data-key="app-install-btn">Instalar App</button>
+    </section>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('loginForm');
+    <section id="faq" tabindex="-1" aria-label="Preguntas frecuentes">
+      <h2 data-key="faq-title">❓ Preguntas Frecuentes</h2>
+      <div class="faq-container">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq1" id="faq1-btn">
+            ¿Quiénes somos? <span class="faq-icon">+</span>
+          </button>
+          <div id="faq1" class="faq-answer" role="region" aria-labelledby="faq1-btn" hidden>
+            <p>Somos cuatro estudiantes de Desarrollo de Software apasionados por la tecnología, los videojuegos y el medio ambiente. Este proyecto representa nuestro trabajo final de carrera, donde elegimos integrar uno de los 17 Objetivos de Desarrollo Sostenible propuestos por la ONU: el punto 14 – Vida Submarina. Lo que comenzó como una idea técnica, se transformó en una causa. Hoy queremos que nuestra plataforma no solo entretenga, sino que también eduque y despierte conciencia.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq2" id="faq2-btn">
+            ¿Por qué lo hicimos? <span class="faq-icon">+</span>
+          </button>
+          <div id="faq2" class="faq-answer" role="region" aria-labelledby="faq2-btn" hidden>
+            <p>Porque sabemos que muchas personas, especialmente quienes viven lejos de las costas o nunca han visto el mar, no dimensionan lo importante que es. El océano regula el clima, produce oxígeno, es hogar de millones de especies… y está muriendo en silencio. Hicimos este juego para conectar emocionalmente a las personas con la vida marina, sin importar dónde vivan. Creemos que si puedes explorar el fondo marino desde tu pantalla, tal vez te importe más protegerlo desde la realidad.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq3" id="faq3-btn">
+            ¿Cuál es nuestra misión? <span class="faq-icon">+</span>
+          </button>
+          <div id="faq3" class="faq-answer" role="region" aria-labelledby="faq3-btn" hidden>
+            <p>Nuestra misión es clara: generar un cambio de conciencia a través de la tecnología y el entretenimiento. Queremos que nuestros jugadores aprendan, se conmuevan y actúen. No basta con saber que el océano está en peligro; queremos que quienes jueguen se pregunten qué pueden hacer para salvarlo. Nuestro videojuego es solo una chispa, pero puede encender una conciencia que dure toda la vida.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq4" id="faq4-btn">
+            ¿Cómo nos mantenemos a flote? <span class="faq-icon">+</span>
+          </button>
+          <div id="faq4" class="faq-answer" role="region" aria-labelledby="faq4-btn" hidden>
+            <p>Nos mantenemos a flote gracias a nuestra pasión por crear, aprender y proteger el planeta. Este proyecto fue completamente desarrollado por nosotros, usando herramientas libres y código abierto. No recibimos financiamiento externo, pero nos mueve algo más fuerte: la convicción de que la tecnología puede ser usada para el bien. Cada línea de código, cada sprite, cada idea surgió de una motivación genuina por marcar la diferencia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
+  <footer>
+    <p>© 2025 GBAR. Todos los derechos reservados.</p>
+  </footer>
 
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
+  <script>
 
-                const userRef = ref(database);
-                try {
-                    const snapshot = await get(child(userRef, `Users/${name}`));
-                    if (snapshot.exists()) {
-                        const userData = snapshot.val();
-                        if (userData.email === email && userData.password === password) {
-                            showSuccessMessage();
-                        } else {
-                            showErrorMessage("Correo o contraseña incorrectos.");
-                        }
-                    } else {
-                        showErrorMessage("Usuario no encontrado.");
-                    }
-                } catch (error) {
-                    showErrorMessage("Error al verificar: " + error.message);
+    const firebaseConfig = {
+      apiKey: "AIzaSyBHB_6aIb_MWTojKx0asdkdRSfhGO4Blys",
+      authDomain: "gbar-61a43.firebaseapp.com",
+      databaseURL: "https://gbar-61a43-default-rtdb.firebaseio.com",
+      projectId: "gbar-61a43",
+      storageBucket: "gbar-61a43.appspot.com",
+      messagingSenderId: "929964316297",
+      appId: "1:929964316297:web:53ef1aa347df095d86d858"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const commentForm = document.getElementById("commentForm");
+    const commentList = document.getElementById("commentsList");
+    const feedbackEl = document.getElementById("form-feedback");
+    const darkModeToggle = document.getElementById("dark-mode-toggle");
+    const langToggle = document.getElementById("lang-toggle");
+    const connectionStatus = document.getElementById("connection-status");
+
+    commentForm.addEventListener("submit", e => {
+      e.preventDefault();
+      feedbackEl.textContent = "";
+
+      const username = document.getElementById("username").value.trim();
+      const text = document.getElementById("comment").value.trim();
+
+      if (!username) {
+        feedbackEl.style.color = "#d32f2f";
+        feedbackEl.textContent = currentLang === "es" ? "Por favor ingresa tu nombre." : "Please enter your name.";
+        return;
+      }
+      if (!text) {
+        feedbackEl.style.color = "#d32f2f";
+        feedbackEl.textContent = currentLang === "es" ? "Por favor escribe un comentario." : "Please write a comment.";
+        return;
+      }
+
+      const comment = {
+        UserName: username,
+        Text: text,
+        Date: new Date().toISOString()
+      };
+
+      db.ref("Comments").push(comment).then(() => {
+        commentForm.reset();
+        feedbackEl.style.color = "#027a18";
+        feedbackEl.textContent = currentLang === "es" ? "Comentario enviado. ¡Gracias!" : "Comment sent. Thanks!";
+        setTimeout(() => {
+          feedbackEl.textContent = "";
+          feedbackEl.style.color = "#000";
+        }, 4000);
+      }).catch(() => {
+        feedbackEl.style.color = "#d9534f";
+        feedbackEl.textContent = currentLang === "es" ? "Error al enviar el comentario." : "Error sending comment.";
+      });
+    });
+
+    function loadComments() {
+      db.ref("Comments").on("value", snapshot => {
+        commentList.innerHTML = "";
+        const comments = snapshot.val();
+        if (comments) {
+          const sorted = Object.entries(comments).sort((a,b) => new Date(b[1].Date) - new Date(a[1].Date));
+          sorted.forEach(([key, c]) => {
+            const div = document.createElement("div");
+            div.classList.add("comment");
+
+            const avatar = document.createElement("div");
+            avatar.className = "avatar";
+            avatar.textContent = c.UserName.charAt(0).toUpperCase();
+
+            const content = document.createElement("div");
+            content.className = "comment-content";
+            content.innerHTML = `
+              <strong>${c.UserName}</strong>
+              <p>${escapeHtml(c.Text)}</p>
+              <small class="date">${new Date(c.Date).toLocaleString()}</small>
+            `;
+
+            div.appendChild(avatar);
+            div.appendChild(content);
+
+            const currentName = document.getElementById("username").value.trim();
+            if(currentName && currentName.toLowerCase() === c.UserName.toLowerCase()) {
+              const deleteBtn = document.createElement("button");
+              deleteBtn.className = "delete-comment-btn";
+              deleteBtn.setAttribute("aria-label", currentLang === "es" ? "Eliminar comentario" : "Delete comment");
+              deleteBtn.innerHTML = "×";
+              deleteBtn.addEventListener("click", () => {
+                if(confirm(currentLang === "es" ? "¿Eliminar este comentario?" : "Delete this comment?")) {
+                  db.ref(`Comments/${key}`).remove();
                 }
-            });
-        });
-
-        function showSuccessMessage() {
-            const bubble = document.createElement('div');
-            bubble.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg animate-bounce';
-            bubble.textContent = '¡Inicio exitoso! 🐙';
-            document.body.appendChild(bubble);
-
-            setTimeout(() => {
-                bubble.remove();
-                window.location.href = "index.html"; 
-            }, 2000);
-        }
-
-        function showErrorMessage(msg) {
-            const bubble = document.createElement('div');
-            bubble.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-full shadow-lg animate-bounce';
-            bubble.textContent = `Error: ${msg} 😢`;
-            document.body.appendChild(bubble);
-            setTimeout(() => {
-                bubble.remove();
-            }, 3000);
-        }
-    </script>
-
-    <script>
-        // Registro del Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/GBAR.github.io/js/serviceWorker.js', {
-    scope: '/GBAR.github.io/'
-                }).then(registration => {
-                    console.log('ServiceWorker registrado con éxito:', registration.scope);
-                }).catch(error => {
-                    console.error('Error al registrar ServiceWorker:', error);
-                });
-            });
-        }
-
-        // Lógica de instalación PWA
-        let deferredPrompt;
-        const installBtn = document.getElementById('installBtn');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.classList.remove('hidden');
-        });
-
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    installBtn.classList.add('hidden');
-                }
-                deferredPrompt = null;
+              });
+              div.appendChild(deleteBtn);
             }
-        });
 
-        window.addEventListener('appinstalled', () => {
-            installBtn.classList.add('hidden');
+            commentList.appendChild(div);
+          });
+        } else {
+          commentList.innerHTML = `<p>${currentLang === "es" ? "No hay comentarios todavía." : "No comments yet."}</p>`;
+        }
+      });
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, m => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[m]);
+    }
+
+    darkModeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      const active = document.body.classList.contains("dark-mode");
+      darkModeToggle.setAttribute("aria-pressed", active.toString());
+      darkModeToggle.textContent = active ? (currentLang === "es" ? "Modo Claro" : "Light Mode") : (currentLang === "es" ? "Modo Oscuro" : "Dark Mode");
+    });
+
+    let currentLang = "es";
+    langToggle.addEventListener("click", () => {
+      currentLang = currentLang === "es" ? "en" : "es";
+      langToggle.setAttribute("aria-pressed", (currentLang === "en").toString());
+      updateTexts();
+    });
+
+    function updateTexts() {
+      
+      document.querySelectorAll("[data-key]").forEach(el => {
+        const key = el.getAttribute("data-key");
+        if (translations[currentLang][key]) {
+          el.textContent = translations[currentLang][key];
+        }
+      });
+
+      const darkOn = document.body.classList.contains("dark-mode");
+      darkModeToggle.textContent = darkOn ? (currentLang === "es" ? "Modo Claro" : "Light Mode") : (currentLang === "es" ? "Modo Oscuro" : "Dark Mode");
+      langToggle.textContent = currentLang.toUpperCase();
+
+      const statusTextSpan = connectionStatus.querySelector("[data-key='status-online-text']");
+      if (navigator.onLine) {
+        connectionStatus.classList.remove("offline");
+        statusTextSpan.textContent = currentLang === "es" ? "Conectado" : "Online";
+      } else {
+        connectionStatus.classList.add("offline");
+        statusTextSpan.textContent = currentLang === "es" ? "Desconectado" : "Offline";
+      }
+    }
+
+    const translations = {
+      es: {
+        "nav-home": "Inicio",
+        "nav-about": "Acerca",
+        "nav-comments": "Comentarios",
+        "nav-app": "App",
+        "nav-faq": "Preguntas",
+        "status-online-text": "Conectado",
+        "home-welcome": "Bienvenido a GBAR",
+        "home-subtitle": "Explora y protege los ecosistemas submarinos con nosotros.",
+        "about-title": "🌊 Acerca de nuestra misión",
+        "about-hours": "150+ horas puestas en el proyecto.",
+        "about-text-1": "Este proyecto es el resultado de trabajo colaborativo, creatividad y pasión.\nBuscamos crear conciencia sobre la vida marina y cómo protegerla.",
+        "comments-title": "💬 Comentarios",
+        "comments-submit": "Enviar Comentario",
+        "app-title": "📱 Descarga la App",
+        "app-text": "Instala GBAR para una experiencia completa en tu dispositivo móvil.",
+        "app-install-btn": "Instalar App",
+        "faq-title": "❓ Preguntas Frecuentes"
+      },
+      en: {
+        "nav-home": "Home",
+        "nav-about": "About",
+        "nav-comments": "Comments",
+        "nav-app": "App",
+        "nav-faq": "FAQ",
+        "status-online-text": "Online",
+        "home-welcome": "Welcome to GBAR",
+        "home-subtitle": "Explore and protect marine ecosystems with us.",
+        "about-title": "🌊 About Our Mission",
+        "about-hours": "150+ hours dedicated to this project.",
+        "about-text-1": "This project is the result of collaborative work, creativity, and passion.\nWe aim to raise awareness about marine life and how to protect it.",
+        "comments-title": "💬 Comments",
+        "comments-submit": "Send Comment",
+        "app-title": "📱 Download the App",
+        "app-text": "Install GBAR for a full experience on your mobile device.",
+        "app-install-btn": "Install App",
+        "faq-title": "❓ Frequently Asked Questions"
+      }
+    };
+
+    function updateConnectionStatus() {
+      if (navigator.onLine) {
+        connectionStatus.classList.remove("offline");
+        connectionStatus.querySelector("[data-key='status-online-text']").textContent = currentLang === "es" ? "Conectado" : "Online";
+      } else {
+        connectionStatus.classList.add("offline");
+        connectionStatus.querySelector("[data-key='status-online-text']").textContent = currentLang === "es" ? "Desconectado" : "Offline";
+      }
+    }
+    window.addEventListener("online", updateConnectionStatus);
+    window.addEventListener("offline", updateConnectionStatus);
+
+    document.querySelectorAll(".faq-question").forEach(button => {
+      button.addEventListener("click", () => {
+        const expanded = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", !expanded);
+        const answer = document.getElementById(button.getAttribute("aria-controls"));
+        if (answer) {
+          if (expanded) {
+            answer.hidden = true;
+            button.querySelector(".faq-icon").textContent = "+";
+          } else {
+            answer.hidden = false;
+            button.querySelector(".faq-icon").textContent = "−";
+          }
+        }
+      });
+    });
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[m];
+      });
+    }
+
+    loadComments();
+    updateConnectionStatus();
+    updateTexts();
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+    function installApp() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(choiceResult => {
+          deferredPrompt = null;
         });
-    </script>
+      }
+    }
+  </script>
 </body>
 </html>
