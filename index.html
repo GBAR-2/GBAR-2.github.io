@@ -275,8 +275,8 @@
         // Registro del Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/GBAR.github.io/js/serviceWorker.js', {
-    scope: '/GBAR.github.io/'
+                navigator.serviceWorker.register('/js/serviceWorker.js', {
+    scope: '/'
                 }).then(registration => {
                     console.log('ServiceWorker registrado con éxito:', registration.scope);
                 }).catch(error => {
