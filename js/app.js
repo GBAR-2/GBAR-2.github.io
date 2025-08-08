@@ -1,5 +1,5 @@
 const CACHE_NAME = 'aventura-marina-tailwind-v3'; // Cambia el nombre al actualizar
-const BASE_URL = '/GBAR.github.io';
+const BASE_URL = '/GBAR-2.github.io';
 const URLS_TO_CACHE = [
   `${BASE_URL}/`,
   `${BASE_URL}/index.html`,
