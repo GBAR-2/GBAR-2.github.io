@@ -49,7 +49,7 @@ self.addEventListener('fetch', (event) => {
       .catch(() => {
         // Fallback solo para páginas HTML
         if (event.request.mode === 'navigate') {
-          return caches.match(`${BASE_URL}/iniciosesion.html`);
+          return caches.match(`/iniciosesion.html`);
         }
         return new Response('Recurso no disponible offline', { status: 503 });
       })
