@@ -2,13 +2,13 @@ const CACHE_NAME = 'aventura-marina-tailwind-v3'; // Cambia el nombre al actuali
 const BASE_URL = '';
 const URLS_TO_CACHE = [
   ``,
-  `index.html`,
-  `registro.html`,
-  `iniciosesion.html`,
-  `manifest.json`,
-  `js/app.js`,
-  `images/Captura de pantalla 2025-06-26 211713.png`,
-  `images/ChatGPT Image 19 jun 2025, 08_57_38 p.m..png`,
+  `/index.html`,
+  `/registro.html`,
+  `/iniciosesion.html`,
+  `/manifest.json`,
+  `/js/app.js`,
+  `/images/Captura de pantalla 2025-06-26 211713.png`,
+  `/images/ChatGPT Image 19 jun 2025, 08_57_38 p.m..png`,
   'https://cdn.tailwindcss.com' // Cachear Tailwind
 ];
 
