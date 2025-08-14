@@ -3,7 +3,7 @@
   "short_name": "GBAR",
   "description": "Para este proyecto, se planea desarrollar a una Aplicación Web Progresiva, que abarque al menos uno de los 17 objetivos de la sustentabilidad, en el caso de este proyecto, abarcaremos: Objetivo 14: Vida Marina. Este objetivo, pretende conservar y utilizar sosteniblemente los océanos, los mares y los recursos marinos, debido a que la existencia humana y la vida en la Tierra dependen de unos océanos y mares sanos. Esta aplicación, pretende concientizar a las personas sobre la importancia de la buena conservación de nuestros mares y océanos, y la abundante contaminación que sufren los mismos.",
   "start_url": "https://GBAR-2.github.io/index.html",
-  "scope": "/GBAR-2.github.io/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#2ba9d9",
   "theme_color": "#1a7a9d",
